@@ -1,0 +1,47 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="mobile.list">
+      <field name="name">Mobile list</field>
+      <field name="model">mobile.mobile</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name_cel"/>
+          <field name="tipo"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="mobile.action_window">
+      <field name="name">Mobile window</field>
+      <field name="res_model">mobile.mobile</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- server action to the one above -->
+    <record model="ir.actions.server" id="mobile.action_server">
+      <field name="name">Mobile server</field>
+      <field name="model_id" ref="model_mobile_mobile"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+
+    <!-- Top menu item -->
+    <menuitem name="Mobile" id="mobile.menu_root"/>
+
+    <!-- menu categories -->
+    <menuitem name="Menu 1" id="mobile.menu_1" parent="mobile.menu_root"/>
+    <menuitem name="Menu 2" id="mobile.menu_2" parent="mobile.menu_root"/>
+    <!-- actions -->
+    <menuitem name="List" id="mobile.menu_1_list" parent="mobile.menu_1"
+              action="mobile.action_window"/>
+    <menuitem name="Server to list" id="mobile" parent="mobile.menu_2"
+              action="mobile.action_server"/>
+  </data>
+</odoo>
